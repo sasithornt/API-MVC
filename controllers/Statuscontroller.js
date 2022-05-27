@@ -3,6 +3,7 @@ const sql = require('mssql');
 
 const { json } = require('express/lib/response');
 
+
 async function getStatuss() {
     try {
         let pool = await sql.connect(config);
@@ -27,14 +28,23 @@ async function getStatus(statusId) {
     }
 }
 
-async function createStatus(status) {
+
+async function createStatus(a,b) {
     try {
         let pool = await sql.connect(config);
-     // let statusname = status[0];
-        let statuss = await pool.request()
-        .input('Name' , sql.VarChar,status.Name)
-        .query(`INSERT INTO Status_Mst (Name) VALUES('${status.Name}')`);
+        let c = await pool.request()
+        .query(`INSERT INTO Status_Mst (Name,CreatedBy) VALUES('${a}','${b}')`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+async function createstatusmaster(a,b) {
+    try {
         
+        let pool = await sql.connect(config);
+        let c = await pool.request()
+        .query(`INSERT INTO Status_Mst (Name,CreatedBy) VALUES('${a}','${b}')`);
     }
     catch (error) {
         console.log(error);

@@ -1,3 +1,4 @@
+var Db1 = require('./controllers/FixedAsset');
 var Db = require('./controllers/Statuscontroller');
 var status = require('./model/Status_Mst');
 var express = require('express');
@@ -25,6 +26,19 @@ router.use((request, response, next) => {
     next();
 });
 
+
+
+
+router.route('/fixedassetall').get((request, response) => {
+    Db1.getFixedAssetAll().then((data) => {
+        response.send(data[0]);
+    })
+})
+
+
+
+
+
 router.route('/statuss').get((request, response) => {
     Db.getStatuss().then((data) => {
         response.send(data[0]);
@@ -39,11 +53,19 @@ router.route('/status/:id').get((request, response) => {
 })
 
 router.route('/createstatus').post((request, response) => {
-    let status = {...request.body}
-
-    Db.createStatus(status).then(data => {
-        response.status(201).send(data);
+    const Name = request.body.Name;
+ // let a = {...request.body}
+    Db.createStatus('${Name}',"TTT").then(data => {
+        response.send("Completed");
+    }) 
+})
+app.route('/createstatusmaster').post((req, res) => {
+    const Name = req.body.Name;
+    const CreatedBy = req.body.CreatedBy;
+    Db.createStatus(Name,CreatedBy).then(data => {
+        res.send("Completed");
     })
 })
+
 
 app.listen(5004, () => console.log('server run on port 5004'))
