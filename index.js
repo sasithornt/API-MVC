@@ -10,7 +10,7 @@ const res = require('express/lib/response');
 var router = express.Router();
 
 const corsOptions = {
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:3000',
     credentials: true,
 };
 app.use(cors(corsOptions));
@@ -26,17 +26,11 @@ router.use((request, response, next) => {
     next();
 });
 
-
-
-
 router.route('/fixedassetall').get((request, response) => {
     Db1.getFixedAssetAll().then((data) => {
         response.send(data[0]);
     })
 })
-
-
-
 
 
 router.route('/statuss').get((request, response) => {
