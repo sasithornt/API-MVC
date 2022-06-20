@@ -1,5 +1,7 @@
 var Db1 = require('./controllers/FixedAsset');
 var Db = require('./controllers/Statuscontroller');
+var D1 = require('./controllers/Category');
+var T = require('./controllers/Type')
 var status = require('./model/Status_Mst');
 var express = require('express');
 var app = express();
@@ -61,5 +63,15 @@ app.route('/createstatusmaster').post((req, res) => {
     })
 })
 
+router.route('/category').get((request,response)=>{
+    D1.getcategory().then((data)=>{
+        response.send(data[0]);
+    })
+})
 
+router.route('/type').get((request,response)=>{
+    T.gettype().then((data)=>{
+        response.send(data[0]);
+    })
+})
 app.listen(5004, () => console.log('server run on port 5004'))

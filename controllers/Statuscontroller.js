@@ -3,7 +3,6 @@ const sql = require('mssql');
 
 const { json } = require('express/lib/response');
 
-
 async function getStatuss() {
     try {
         let pool = await sql.connect(config);

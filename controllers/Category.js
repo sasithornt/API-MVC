@@ -14,7 +14,7 @@ async function getcategory() {
     }
 }
 
-async function getcategory(categorysId) {
+async function getcategoryid(categorysId) {
     try {
         let pool = await sql.connect(config);
         let categoryy = await pool.request()
@@ -25,4 +25,21 @@ async function getcategory(categorysId) {
     catch (error) {
         console.log(error);
     }
+}
+
+async function postcategory(a) {
+    try {
+        let pool = await sql.connect(config);
+        let c = await pool.request()
+            .query(`INSERT INTO Category ([Name],[Category_Comment],[UpdatedBy],[RecordDate],[CreatedBy],[CreateDate],[RowPointer]) VALUES('${a}')`)
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {
+    getcategory: getcategory,
+    getcategoryid: getcategoryid,
+    postcategory: postcategory
 }
