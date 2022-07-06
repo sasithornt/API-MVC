@@ -33,6 +33,44 @@ async function getFixedAssetAll() {
     }
 }
 
+
+async function insertFixedAsset_Mst(parm) {
+    try {
+        let pool = await sql.connect(config);
+        let c = await pool.request()
+        .query(`INSERT INTO Status_Mst (Asset_Code,Name,Regis_Date,Begin_Use,DestroyRequest_Date,
+            Destroy_Date,Location_id,User_id,Qty,Um_id,Manufacture_id,Model_id,Serail,Types_id,
+            Category_id,Status_id,PurchaseAmt,Amount,AccruDrep,CurrentDrep,Amorlization,Useful) 
+        VALUES('${order.Asset_Code}'
+        ,'${parm.Name}'
+        ,'${parm.Regis_Date}'
+        ,'${parm.Begin_Use}'
+        ,'${parm.DestroyRequest_Date}'
+        ,'${parm.Destroy_Date}'
+        ,'${parm.Location_id}'
+        ,'${parm.User_id}'
+        ,'${parm.Qty}'
+        ,'${parm.Um_id}'
+        ,'${parm.Manufacture_id}'
+        ,'${parm.Model_id}'
+        ,'${parm.Serail}'
+        ,'${parm.Types_id}'
+        ,'${parm.Category_id}'
+        ,'${parm.Status_id}'
+        ,'${parm.PurchaseAmt}'
+        ,'${parm.Amount}'
+        ,'${parm.AccruDrep}'
+        ,'${parm.CurrentDrep}'
+        ,'${parm.Amorlization}'
+        ,'${parm.Useful}'
+        )`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getFixedAssetAll: getFixedAssetAll,
+    insertFixedAsset_Mst: insertFixedAsset_Mst,
 }
