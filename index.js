@@ -3,6 +3,7 @@ var Db = require('./controllers/Statuscontroller');
 var D1 = require('./controllers/Category');
 var T = require('./controllers/Type')
 var ModelController = require('./controllers/ModelController')
+var FixedAsset_MstController = require('./controllers/FixedAsset_MstController')
 
 var bodyParser = require('body-parser');
 var mssql = require('mssql');
@@ -105,4 +106,11 @@ app.route('/modelcreate').post((request, response) => {let parmlist = { ...reque
     ModelController.creModel(parmlist).then(data  => {response.send("Completed").json(data);})
 })
 // JAY
+
+// TABLE "FixedAsset_Mst"
+app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data[0]);})})
+// JAY
+
+
+
 app.listen(5004, () => console.log('server run on port 5004'))
