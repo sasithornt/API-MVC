@@ -108,7 +108,7 @@ app.route('/modelcreate').post((request, response) => {let parmlist = { ...reque
 // JAY
 
 // TABLE "FixedAsset_Mst"
-app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data[0]);})})
+app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data);})})
 // JAY
 
 
