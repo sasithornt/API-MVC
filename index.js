@@ -11,6 +11,7 @@ var cors = require('cors');
 const res = require('express/lib/response');
 var express = require('express');
 const req = require('express/lib/request');
+const FixedAsset = require('./controllers/FixedAsset');
 var app = express();
 var router = express.Router();
 
@@ -37,12 +38,12 @@ app.route('/fixedassetall').get((request, response) => {
     })
 })
 
-app.route('/fixedassetall').post((request, response) => {
-    let  parm = { ...request.body }
-    Db1.insertFixedAsset_Mst(parm).then(data  => {
-      response.send("Completed").json(data);
-    })
-  })
+// app.route('/fixedassetall').post((request, response) => {
+//     let  parm = { ...request.body }
+//     Db1.insertFixedAsset_Mst(parm).then(data  => {
+//       response.send("Completed").json(data);
+//     })
+//   })
 
 
 app.route('/statuss').get((request, response) => {
@@ -77,15 +78,6 @@ app.route('/createstatus1').post((request, response) => {
   })
 
 
-
-
-
-
-
-
-
-
-
 router.route('/category').get((request,response)=>{
     D1.getcategory().then((data)=>{
         response.send(data[0]);
@@ -108,9 +100,15 @@ app.route('/modelcreate').post((request, response) => {let parmlist = { ...reque
 // JAY
 
 // TABLE "FixedAsset_Mst"
-app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data);})})
+app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data[0]);})})
+
 // JAY
 
-
+//Fern Table "FixedAsset_Mst"
+app.route('/addfixedasset').post((request,response) => {
+    let parm = { ...request.body }
+    FixedAsset.insertFixedAsset_Mst(parm).then(data  => {response.send("Completed").json(data);})
+})
+//Fern End Table "FixedAsset_Mst"
 
 app.listen(5004, () => console.log('server run on port 5004'))
