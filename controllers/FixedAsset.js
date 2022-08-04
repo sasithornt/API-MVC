@@ -38,7 +38,7 @@ async function insertFixedAsset_Mst(parm) {
     try {
         let pool = await sql.connect(config);
         let c = await pool.request()
-        .query(`INSERT INTO FixedAsset_Mst (Asset_Code,Name)   VALUES('${parm.Asset_Code}','${parm.Name}')`);
+        .query(`INSERT INTO FixedAsset_Mst (Asset_Code,Name,Qty,PurchaseAmt)   VALUES('${parm.Asset_Code}','${parm.Name}',${parm.Qty},${parm.PurchaseAmt})`);
         // .query(`INSERT INTO FixedAsset_Mst (Asset_Code,Name,Regis_Date,Begin_Use,DestroyRequest_Date,
         //     Destroy_Date,Location_id,User_id,Qty,Um_id,Manufacture_id,Model_id,Serail,Types_id,
         //     Category_id,Status_id,PurchaseAmt,Amount,AccruDrep,CurrentDrep,Amorlization,Useful) 

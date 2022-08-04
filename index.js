@@ -12,6 +12,11 @@ const res = require('express/lib/response');
 var express = require('express');
 const req = require('express/lib/request');
 const FixedAsset = require('./controllers/FixedAsset');
+const Um = require('./controllers/Um');
+const Locationn = require('./controllers/Locationn');
+const { user } = require('./config/db');
+const User = require('./controllers/User');
+const Manufacture = require('./controllers/Manufacture');
 var app = express();
 var router = express.Router();
 
@@ -68,8 +73,6 @@ app.route('/status/:id').get((request, response) => {
 //     })
 // })
 
-
-
 app.route('/createstatus1').post((request, response) => {
     let  order = { ...request.body }
     Db.createStatus1(order).then(data  => {
@@ -99,6 +102,15 @@ app.route('/modelcreate').post((request, response) => {let parmlist = { ...reque
 })
 // JAY
 
+// TABLE "Manufacture" Brand
+app.route('/munufactures').get((request,response) => {Manufacture.getManufactures().then((data)  => {response.send(data[0]);})})
+app.route('/munufacture/:id').get((request,response) => {Manufacture.getManufacture(request.params.id).then((data)  => {response.send(data[0]);})})
+app.route('/munufacturedelete/:id').delete((request,response) => {Manufacture.delManufacture(request.params.id).then((data)  => {response.send(data[0]);})})
+app.route('/munufacturecreate').post((request, response) => {let parmlist = { ...request.body }
+    Manufacture.creManufacture(parmlist).then(data  => {response.send("Completed").json(data);})
+})
+// Fern
+
 // TABLE "FixedAsset_Mst"
 app.route('/fixedasset/:id').get((request,response) => {FixedAsset_MstController.getFixedAsset(request.params.id).then((data)  => {response.send(data[0]);})})
 
@@ -110,5 +122,17 @@ app.route('/addfixedasset').post((request,response) => {
     FixedAsset.insertFixedAsset_Mst(parm).then(data  => {response.send("Completed").json(data);})
 })
 //Fern End Table "FixedAsset_Mst"
+
+//Fern Table "UM" , "Location"//
+app.route('/um').get((request,response) => {
+    Um.getUm().then((data) => {response.send(data[0]);})
+})
+app.route('/user').get((request,response) => { 
+    User.getuser().then((data) => {response.send(data[0]);})
+})
+
+app.route('/locations').get((request,response) => {
+    Locationn.getlocation().then((data) => {response.send(data[0]);})
+})
 
 app.listen(5004, () => console.log('server run on port 5004'))
