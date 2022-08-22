@@ -59,16 +59,6 @@ async function updateFixedAsset_Mst(parmlist,Id) {
     }
 }
 
-// async function deleteFixedAsset_Mst(Id){
-//     try {
-//         let pool = await sql.connect(config);
-//         let c = await pool.request().input('id_parameter', sql.Int, Id).query("DELETE FROM [GS].[dbo].[FixedAsset_Mst] WHERE Id = @id_parameter");
-//         return c.recordsets
-//     }
-//     catch (error) {
-//         console.log(error);
-//     }
-// }
 async function deleteFixedAsset_Mst(Id) {
     try {
         let pool = await sql.connect(config);

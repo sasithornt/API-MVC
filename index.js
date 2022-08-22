@@ -180,11 +180,18 @@ app.route('/fixedassetdetailall').get((request, response) => { FixedAssetDetail.
 app.route('/fixedassetdetail/:id').get((request, response) => { FixedAssetDetail.getFixedAssetDetailId(request.params.id).then((data) => { response.send(data[0]); }) })
 app.route('/fixedassetcreate').post((request, response) => {
     let s = { ...request.body }
-    FixedAssetDetail.insertFixedAsset_Dtl(s).then(data => { response.send("Completed").json(data); })
+    FixedAssetDetail.insertFixedAsset_Dtl(s).then(data => { response.send("Completed").json(data[0]); })
 })
 app.route('/fixedassetdetaildelete/:id').delete((request, response) => {
     FixedAssetDetail.delsFixedAsset_Dtl(request.params.id).then((data) => {
         response.send("Delete Completed").json(data);
+    })
+})
+
+app.route('/updatedetail/:id').put((request, response) => {
+    let parmlist = { ...request.body }
+    FixedAssetDetail.updateFixedAsset_Dtl(parmlist,request.params.id).then((data) => {
+        response.send("Update Completed").json(data);
     })
 })
 //Fern End End Table "FixedAsset_Dtl"//

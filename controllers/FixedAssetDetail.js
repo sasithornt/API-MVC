@@ -24,12 +24,12 @@ async function getFixedAssetDetailId(Id) {
     try {
         let pool = await sql.connect(config);
         let fixedassetdetailid = await pool.request().input('id_parameter', sql.Int, Id)
-        .query("SELECT  FD.Id,FD.FixedAsset_id, FD.Po,FD.Po_line,FD.Recieved_Date,FD.Invoice,FD.Invoice_Date,FD.Supplier_id,FD.Item_desc,FD.Unit_Price,FD.Qty,FD.Unit_Price,FD.Um_id" +
+        .query("SELECT  FD.Id,FD.FixedAsset_id,Fa.Asset_Code,FD.Po,FD.Po_line,FD.Recieved_Date,FD.Invoice,FD.Invoice_Date,FD.Supplier_id,FD.Item_desc,FD.Unit_Price,FD.Qty,FD.Unit_Price,FD.Um_id" +
         " FROM    FixedAsset_Mst FA  "+
-        "          LEFT JOIN FIXEDASSET_Dtl FD    ON FA.id = fd.FixedAsset_id " +
-        "        LEFT JOIN UM            ON UM.ID = FD.UM_ID"+
-        "        LEFT JOIN Supplier         ON Supplier.Id = FD.Supplier_id"+
-        " where FA.Id = @id_parameter"
+        "        LEFT JOIN FIXEDASSET_Dtl FD    ON FA.id = fd.FixedAsset_id " +
+        "        LEFT JOIN UM                   ON UM.ID = FD.UM_ID"+
+        "        LEFT JOIN Supplier             ON Supplier.Id = FD.Supplier_id"+
+        " where FD.Id = @id_parameter"
     );
         return fixedassetdetailid.recordsets;
 
@@ -49,6 +49,19 @@ async function insertFixedAsset_Dtl(parm) {
         console.log(error);
     }
 }
+async function updateFixedAsset_Dtl(parmlist,Id) {
+    try {
+            let pool = await sql.connect(config);
+            let c = await pool.request()
+            .query(`UPDATE [GS].[dbo].[FixedAsset_Dtl] 
+            SET Po = '${parmlist.Po}',Po_line = ${parmlist.Po_line},Recieved_Date = '${parmlist.Recieved_Date}', Invoice = '${parmlist.Invoice}',
+            Invoice_Date='${parmlist.Invoice_Date}',Supplier_id = ${parmlist.Supplier_id},Item_desc = '${parmlist.Item_desc}',Qty=${parmlist.Qty}, 
+            Unit_Price=${parmlist.Unit_Price}, Um_id = ${parmlist.Um_id}  where Id = '${Id}'`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 async function delsFixedAsset_Dtl(Id) {
     try {
         let pool = await sql.connect(config);
@@ -63,5 +76,6 @@ module.exports = {
     getFixedAssetDetailAll : getFixedAssetDetailAll,
     getFixedAssetDetailId : getFixedAssetDetailId,
     insertFixedAsset_Dtl : insertFixedAsset_Dtl,
+    updateFixedAsset_Dtl : updateFixedAsset_Dtl,
     delsFixedAsset_Dtl : delsFixedAsset_Dtl
 }
