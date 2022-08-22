@@ -27,11 +27,21 @@ async function getcategoryid(categorysId) {
     }
 }
 
-async function postcategory(a) {
+async function postcategory(s){
+    try{
+        let pool = await sql.connect(config);
+        let t = await pool.request()
+        .query(`INSERT INTO [GS].[dbo].[Category] (Name,Category_Comment) VALUES ('${s.Name}','${s.Category_Comment}')`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+async function delcategory(Id) {
     try {
         let pool = await sql.connect(config);
         let c = await pool.request()
-            .query(`INSERT INTO Category ([Name],[Category_Comment],[UpdatedBy],[RecordDate],[CreatedBy],[CreateDate],[RowPointer]) VALUES('${a}')`)
+            .query(`DELETE FROM [GS].[dbo].[Category] WHERE Id = '${Id}'`);
     }
     catch (error) {
         console.log(error);
@@ -41,5 +51,6 @@ async function postcategory(a) {
 module.exports = {
     getcategory: getcategory,
     getcategoryid: getcategoryid,
-    postcategory: postcategory
+    postcategory: postcategory,
+    delcategory : delcategory
 }

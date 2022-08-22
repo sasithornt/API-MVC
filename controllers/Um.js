@@ -13,7 +13,29 @@ async function getUm(){
         console.log(error);
     }
 }
+async function postUm(s){
+    try{
+        let pool = await sql.connect(config);
+        let t = await pool.request()
+        .query(`INSERT INTO [GS].[dbo].[Um] (Name) VALUES ('${s.Name}')`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+async function delUm(Id) {
+    try {
+        let pool = await sql.connect(config);
+        let c = await pool.request()
+            .query(`DELETE FROM [GS].[dbo].[Um] WHERE Id = '${Id}'`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
 module.exports = {
     getUm : getUm,
+    postUm : postUm,
+    delUm : delUm
 }

@@ -32,19 +32,19 @@ async function creModel(parmlist) {
     try {
         let pool = await sql.connect(config);
         let c = await pool.request()
-        //.query(`INSERT INTO [GS].[dbo].[Model] (Name,Model_Comment,UpdatedBy,RecordDate) VALUES('${parmlist.Name}','${parmlist.Model_Comment}','${parmlist.UpdatedBy}','${parmlist.RecordDate}')`);
-        .query(`INSERT INTO [GS].[dbo].[Model] (Name,Model_Comment,UpdatedBy,RecordDate,CreatedBy,CreateDate) VALUES('${parmlist.Name}','${parmlist.Model_Comment}','${parmlist.UpdatedBy}','${parmlist.RecordDate}','${parmlist.CreatedBy}','${parmlist.CreateDate}')`);
+        .query(`INSERT INTO [GS].[dbo].[Model] (Name,Model_Comment) VALUES ('${parmlist.Name}','${parmlist.Model_Comment}')`);
     }
     catch (error) {
         console.log(error);
     }
 }
 
+
 async function delModel(Id) {
     try {
         let pool = await sql.connect(config);
-        let c = await pool.request().input('id_parameter', sql.Int, Id).query("DELETE FROM [GS].[dbo].[Model] WHERE Id = @id_parameter");
-        return c.recordsets
+        let c = await pool.request()
+            .query(`DELETE FROM [GS].[dbo].[Model] WHERE Id = '${Id}'`);
     }
     catch (error) {
         console.log(error);
