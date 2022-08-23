@@ -29,6 +29,24 @@ async function getFixedAssetDetailId(Id) {
         "        LEFT JOIN FIXEDASSET_Dtl FD    ON FA.id = fd.FixedAsset_id " +
         "        LEFT JOIN UM                   ON UM.ID = FD.UM_ID"+
         "        LEFT JOIN Supplier             ON Supplier.Id = FD.Supplier_id"+
+        " where FA.Id = @id_parameter"
+    );
+        return fixedassetdetailid.recordsets;
+
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+async function getFixedAssetDetailBYId(Id) {
+    try {
+        let pool = await sql.connect(config);
+        let fixedassetdetailid = await pool.request().input('id_parameter', sql.Int, Id)
+        .query("SELECT  FD.Id,FD.FixedAsset_id,Fa.Asset_Code,FD.Po,FD.Po_line,FD.Recieved_Date,FD.Invoice,FD.Invoice_Date,FD.Supplier_id,FD.Item_desc,FD.Unit_Price,FD.Qty,FD.Unit_Price,FD.Um_id" +
+        " FROM    FixedAsset_Mst FA  "+
+        "        LEFT JOIN FIXEDASSET_Dtl FD    ON FA.id = fd.FixedAsset_id " +
+        "        LEFT JOIN UM                   ON UM.ID = FD.UM_ID"+
+        "        LEFT JOIN Supplier             ON Supplier.Id = FD.Supplier_id"+
         " where FD.Id = @id_parameter"
     );
         return fixedassetdetailid.recordsets;
@@ -75,6 +93,7 @@ async function delsFixedAsset_Dtl(Id) {
 module.exports = {
     getFixedAssetDetailAll : getFixedAssetDetailAll,
     getFixedAssetDetailId : getFixedAssetDetailId,
+    getFixedAssetDetailBYId : getFixedAssetDetailBYId,
     insertFixedAsset_Dtl : insertFixedAsset_Dtl,
     updateFixedAsset_Dtl : updateFixedAsset_Dtl,
     delsFixedAsset_Dtl : delsFixedAsset_Dtl

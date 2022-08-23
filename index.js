@@ -178,9 +178,10 @@ app.route('/deletefixedasset/:id').delete((request, response) => {
 //Fern Table"FixedAsset_Dtl"
 app.route('/fixedassetdetailall').get((request, response) => { FixedAssetDetail.getFixedAssetDetailAll().then((data) => { response.send(data[0]); }) })
 app.route('/fixedassetdetail/:id').get((request, response) => { FixedAssetDetail.getFixedAssetDetailId(request.params.id).then((data) => { response.send(data[0]); }) })
+app.route('/fixedassetdetailby/:id').get((request, response) => { FixedAssetDetail.getFixedAssetDetailBYId(request.params.id).then((data) => { response.send(data[0]); }) })
 app.route('/fixedassetcreate').post((request, response) => {
     let s = { ...request.body }
-    FixedAssetDetail.insertFixedAsset_Dtl(s).then(data => { response.send("Completed").json(data[0]); })
+    FixedAssetDetail.insertFixedAsset_Dtl(s).then(data => { response.send("Completed") })
 })
 app.route('/fixedassetdetaildelete/:id').delete((request, response) => {
     FixedAssetDetail.delsFixedAsset_Dtl(request.params.id).then((data) => {
