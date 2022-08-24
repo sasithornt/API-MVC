@@ -43,17 +43,23 @@ async function insertFixedAsset_Mst(parm) {
     }
 }
 
-async function updateFixedAsset_Mst(Id,FixedAsset){
-    // const { Name,Regis_Date,Begin_Use,DestroyRequest_Date,Destroy_Date,Location_id,User_id,Qty,Um_id,Manufacture_id,Model_id,Serail,Types_id,Category_id,Status_id,PurchaseAmt,Amount,AccruDrep,CurrentDrep,Amorlization,Useful } 
-    let pool = await sql.connect(config);
-
-    let c = await pool.request().input('id_parameter', sql.Int, Id).query(
-        `UPDATE [dbo].[FixedAsset_Mst] SET Name = '${FixedAsset.Name}', Regis_Date = '${FixedAsset.Regis_Date}' ,Begin_Use = '${FixedAsset.Begin_Use}', DestroyRequest_Date = '${FixedAsset.DestroyRequest_Date}',Location_id = ${FixedAsset.Location_id}, User_id = '${UFixedAsset.ser_id}', Manufacture_id = ${FixedAsset.Manufacture_id}, Model_id = ${FixedAsset.Model_id} , Serail = '${FixedAsset.Serail}' , Types_id = ${FixedAsset.Types_id}, Category_id = ${FixedAsset.Category_id} ,Status_id = ${FixedAsset.Status_id}, PurchaseAmt = ${FixedAsset.PurchaseAmt}, Amount = ${FixedAsset.Amount}, AccruDrep = ${FixedAsset.AccruDrep}, CurrentDrep = ${FixedAsset.CurrentDrep}, Amorlization = ${FixedAsset.Amorlization}, Useful = ${FixedAsset.Useful} WHERE id = {@id_parameter}`,
-   
-
-    )
+async function updateFixedAsset_Mst(parmlist,Id) {
+    try {
+            let pool = await sql.connect(config);
+            let c = await pool.request()
+            .query(`UPDATE [GS].[dbo].[FixedAsset_Mst] 
+            SET Name = '${parmlist.Name}', Regis_Date = '${parmlist.Regis_Date}' ,Begin_Use = '${parmlist.Begin_Use}', 
+            DestroyRequest_Date = '${parmlist.DestroyRequest_Date}',Destroy_Date ='${parmlist.Destroy_Date}',Location_id = ${parmlist.Location_id}, 
+            User_id = ${parmlist.User_id},Qty = ${parmlist.Qty} , Manufacture_id = ${parmlist.Manufacture_id}, Model_id = ${parmlist.Model_id} , 
+            Serail = '${parmlist.Serail}' , Types_id = ${parmlist.Types_id}, 
+            Category_id = ${parmlist.Category_id} ,Status_id = ${parmlist.Status_id}, PurchaseAmt = ${parmlist.PurchaseAmt},
+            AccruDrep = ${parmlist.AccruDrep}, CurrentDrep = ${parmlist.CurrentDrep}, Amorlization = ${parmlist.Amorlization}, 
+            Useful = ${parmlist.Useful} where Id = '${Id}'`);
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
-
 
 async function deleteFixedAsset_Mst(Id){
     try {

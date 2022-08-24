@@ -156,17 +156,20 @@ app.route('/munufactureupdate/:id').put((request, response) => {
 app.route('/fixedasset/:id').get((request, response) => { FixedAsset_MstController.getFixedAsset(request.params.id).then((data) => { response.send(data[0]); }) })
 // JAY
 //Fern Table "FixedAsset_Mst"
+// get FixedAsset_MstById 
+app.route('/fixedassetBy/:id').get((request, response) => { FixedAsset_MstController.getFixedAssetBy(request.params.id).then((data) => { response.send(data[0]); }) })
+
 app.route('/addfixedasset').post((request, response) => {
     let parm = { ...request.body }
     FixedAsset.insertFixedAsset_Mst(parm).then(data => { response.send("Completed").json(data); })
 })
-app.put('/updatefixedasset/:id', (req, res, next) => {
-    let parm = { ...req.body }
-    FixedAsset.updateFixedAsset_Mst(req.params.id)
-        .then(data => {
-            response.send("Completed").json(data[0]);
-        })
-});
+
+app.route('/updatefixedasset/:id').put((request, response) => {
+    let parmlist = { ...request.body }
+    FixedAsset.updateFixedAsset_Mst(parmlist,request.params.id).then((data) => {
+        response.send("Update Completed").json(data);
+    })
+})
 
 app.route('/deletefixedasset/:id').delete((request, response) => {
     FixedAsset.deleteFixedAsset_Mst(request.params.id).then((data) => {
