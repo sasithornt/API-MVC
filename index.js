@@ -26,15 +26,19 @@ const Statuscontroller = require('./controllers/Statuscontroller');
 const Category = require('./controllers/Category');
 var app = express();
 var router = express.Router();
+const http = require('http');
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000/test',
+    origin:'http://192.168.0.19/test/',
     credentials: true,
     optionSuccessStatus:200
 };
 app.use(cors(corsOptions));
 
 app.use('/', router);
+app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -43,6 +47,12 @@ app.use(express.json());
 router.use((request, response, next) => {
     console.log('middleware');
     next();
+});
+router.get('/', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true); 
 });
 
 app.route('/fixedassetall').get((request, response) => {
@@ -239,5 +249,5 @@ app.route('/supplierdelete/:id').delete((request, response) => {
         response.send("Delete Completed").json(data);
     })
 })
-app.listen(5004, () => console.log('server run on port 5004'))
+app.listen(5006, () => console.log('server run on port 5006'))
 

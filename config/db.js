@@ -1,7 +1,8 @@
 var config = {
     user: 'sa',
     password: '*Adm@gset',
-    server: 'GSET_044\\GSET_044',
+    // server: 'GSET_044\\GSET_044',
+    server : '192.168.0.044\\GSET_044',
     database: 'GS',
     synchronize: true,
     trustServerCertificate: true,
